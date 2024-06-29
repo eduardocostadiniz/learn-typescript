@@ -5,7 +5,7 @@ import { StatusCodes} from 'http-status-codes';
 const router = Router();
 
 router.get('/', (req, res) => {
-  console.log(req.body);
+  console.log(req.body);  
   return res.send({ msg: 'Olá Mundo' });
 });
 
