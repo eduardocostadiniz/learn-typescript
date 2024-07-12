@@ -13,9 +13,9 @@ const cidadeValidation: yup.Schema<ICidade> = yup.object().shape({
 });
 
 
-export const createBodyValidator : RequestHandler = async (req, res, next) => {
+export const createBodyValidator: RequestHandler = async (req, res, next) => {
   try {
-    await cidadeValidation.validate(req.body, {abortEarly: false});
+    await cidadeValidation.validate(req.body, { abortEarly: false });
     return next();
   } catch (error) {
     const erros = error as yup.ValidationError;
@@ -26,12 +26,12 @@ export const createBodyValidator : RequestHandler = async (req, res, next) => {
       mapErrors[err.path] = err.message;
     });
 
-    return res.status(StatusCodes.BAD_REQUEST).send({errors: mapErrors});
+    return res.status(StatusCodes.BAD_REQUEST).send({ errors: mapErrors });
   }
 };
 
-export const create = async (req: Request<{}, {}, ICidade>, res: Response) => {  
+export const create = async (req: Request<{}, {}, ICidade>, res: Response) => {
   console.log(req.body);
 
-  return res.status(StatusCodes.CREATED).send({ data: req.body });
+  return res.status(StatusCodes.CREATED).send({ id: 1 });
 };
