@@ -3,9 +3,9 @@ import './shared/services/translations';
 import express from 'express';
 import { router } from './routes';
 
-const app = express();
+const server = express();
 
-app.use(express.json());
-app.use(router);
+server.use(express.json());
+server.use(router);
 
-app.listen(3333, () => console.log(`[${process.env.NODE_ENV}] Aplicação Iniciada!`));
+export { server };
