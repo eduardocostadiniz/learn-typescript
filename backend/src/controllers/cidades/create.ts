@@ -1,22 +1,22 @@
-import { Request, Response } from 'express';
+import { Request, RequestHandler, Response } from 'express';
 import * as yup from 'yup';
 import { StatusCodes } from 'http-status-codes';
 
 interface ICidade {
-  name: string;
+  nome: string;
   estado: string;
 }
 
 const cidadeValidation: yup.Schema<ICidade> = yup.object().shape({
-  name: yup.string().required().min(3),
+  nome: yup.string().required().min(3),
   estado: yup.string().required().min(3),
 });
 
-export const create = async (req: Request<{}, {}, ICidade>, res: Response) => {
-  let validacaoCorpo : ICidade | undefined = undefined;
 
+export const createBodyValidator : RequestHandler = async (req, res, next) => {
   try {
-    validacaoCorpo = await cidadeValidation.validate(req.body, {abortEarly: false});
+    await cidadeValidation.validate(req.body, {abortEarly: false});
+    return next();
   } catch (error) {
     const erros = error as yup.ValidationError;
     const mapErrors: Record<string, string> = {};
@@ -28,8 +28,10 @@ export const create = async (req: Request<{}, {}, ICidade>, res: Response) => {
 
     return res.status(StatusCodes.BAD_REQUEST).send({errors: mapErrors});
   }
-  
-  console.log(validacaoCorpo);
+};
+
+export const create = async (req: Request<{}, {}, ICidade>, res: Response) => {  
+  console.log(req.body);
 
   return res.status(StatusCodes.CREATED).send({ data: req.body });
 };
