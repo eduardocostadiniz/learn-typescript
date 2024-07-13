@@ -15,6 +15,7 @@ export default [
       'indent': ['error', 2],
       'semi': ['error', 'always'],
       'quotes': ['error', 'single'],
+      'SwitchCase': 1,
     }
   },
 ];
