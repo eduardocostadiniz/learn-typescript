@@ -1,5 +1,5 @@
-import knex from "knex";
-import { development, test, production } from "./Environment";
+import knex from 'knex';
+import { development, test, production } from './Environment';
 
 
 const getEnvironment = () => {
@@ -8,6 +8,6 @@ const getEnvironment = () => {
     case 'test': return test;
     default: return development;
   }
-}
+};
 
 export const Knex = knex(getEnvironment());
