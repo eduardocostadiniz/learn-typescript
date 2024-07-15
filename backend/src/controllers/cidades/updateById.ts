@@ -11,7 +11,7 @@ interface IBodyUpdateById {
 }
 
 export const updateById = async (req: Request<IParamsUpdateById, {}, IBodyUpdateById>, res: Response) => {
-  await CidadesProvider.updateById(req.params.id, req.body.nome);
+  await CidadesProvider.updateById(req.params.id, req.body);
 
   return res.status(StatusCodes.OK).send({ msg: 'OK' });
 
