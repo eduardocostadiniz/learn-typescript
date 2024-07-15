@@ -1,15 +1,13 @@
 import { Request, RequestHandler, Response } from 'express';
 import * as yup from 'yup';
 import { StatusCodes } from 'http-status-codes';
+import { ICidade } from 'src/database/models';
+import { CidadesProvider } from '../../database/providers/cidade';
 
-interface ICidade {
-  nome: string;
-  estado: string;
-}
+interface IBodyProps extends Omit<ICidade, 'id'> {}
 
-const cidadeValidation: yup.Schema<ICidade> = yup.object().shape({
-  nome: yup.string().required().min(3),
-  estado: yup.string().required().min(3),
+const cidadeValidation: yup.Schema<IBodyProps> = yup.object().shape({
+  nome: yup.string().required().min(3).max(150),
 });
 
 
@@ -30,8 +28,16 @@ export const createBodyValidator: RequestHandler = async (req, res, next) => {
   }
 };
 
-export const create = async (req: Request<{}, {}, ICidade>, res: Response) => {
-  console.log(req.body);
+export const create = async (req: Request<{}, {}, IBodyProps>, res: Response) => {
+  const result = await CidadesProvider.create(req.body);
 
-  return res.status(StatusCodes.CREATED).send({ id: 1 });
+  if (result instanceof Error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: {
+        default: result.message,
+      }
+    });
+  }
+
+  return res.status(StatusCodes.CREATED).send({ id: result });
 };

@@ -1,13 +1,14 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import { CidadesProvider } from '../../database/providers/cidade';
 
 interface IParamsDeleteById {
-  page: number
+  id: number
 }
 
-export const deleteById = (req: Request<IParamsDeleteById>, res: Response) => {
-  console.log('deleteById');
+export const deleteById = async (req: Request<IParamsDeleteById>, res: Response) => {
+  await CidadesProvider.deleteById(req.params.id);
 
-  return res.status(StatusCodes.OK).send({ msg: 'deleteById' });
+  return res.status(StatusCodes.NO_CONTENT).send();
 
 };

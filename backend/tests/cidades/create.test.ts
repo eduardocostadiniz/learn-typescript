@@ -5,23 +5,14 @@ import { testServer } from '../jest.setup';
 describe('Cidades - Create', () => {
 
   it('Cria uma cidade', async () => {
-    const response = await testServer.post('/cidades').send({ nome: 'Araguari', estado: 'Minas Gerais' });
+    const response = await testServer.post('/cidades').send({ nome: 'Araguari'});
     expect(response.statusCode).toEqual(StatusCodes.CREATED);
     expect(response.body).toHaveProperty('id');
     expect(response.body['id']).toEqual(1);
   });
 
-  it('Erro ao criar cidade sem estado', async () => {
-    const response = await testServer.post('/cidades').send({ nome: 'Araguari' });
-
-    expect(response.statusCode).toEqual(StatusCodes.BAD_REQUEST);
-    expect(response.body).toHaveProperty('errors');
-    expect(response.body['errors']).toHaveProperty('estado');
-    expect(response.body['errors']['estado']).toEqual('Este campo é obrigatório');
-  });
-
   it('Erro ao criar cidade sem nome', async () => {
-    const response = await testServer.post('/cidades').send({ estado: 'Minas Gerais' });
+    const response = await testServer.post('/cidades').send({ });
 
     expect(response.statusCode).toEqual(StatusCodes.BAD_REQUEST);
     expect(response.body).toHaveProperty('errors');

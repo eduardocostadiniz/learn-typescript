@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import { CidadesProvider } from '../../database/providers/cidade';
 
 interface IQueryGetAll {
   page: number
@@ -7,10 +8,10 @@ interface IQueryGetAll {
   filter: string
 }
 
-export const getAll = (req: Request<{}, {}, {}, IQueryGetAll>, res: Response) => {
-  console.log('Get All');
-  console.log(req.query);
+export const getAll = async (req: Request<{}, {}, {}, IQueryGetAll>, res: Response) => {
 
-  return res.status(StatusCodes.OK).send({ msg: 'OK' });
+  const result = await CidadesProvider.getAll();
+
+  return res.status(StatusCodes.OK).send({ data: result });
 
 };
