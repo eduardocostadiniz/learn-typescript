@@ -11,7 +11,8 @@ interface IQueryGetAll {
 export const getAll = async (req: Request<{}, {}, {}, IQueryGetAll>, res: Response) => {
 
   const result = await CidadesProvider.getAll();
+  const count = await CidadesProvider.count();  
 
-  return res.status(StatusCodes.OK).send({ data: result });
+  return res.status(StatusCodes.OK).header('x-total-count', String(count)).send({ data: result });
 
 };
