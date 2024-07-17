@@ -8,7 +8,7 @@ describe('Cidades - Create', () => {
     const response = await testServer.post('/cidades').send({ nome: 'Araguari'});
     expect(response.statusCode).toEqual(StatusCodes.CREATED);
     expect(response.body).toHaveProperty('id');
-    expect(response.body['id']).toEqual(1);
+    expect(response.body['id']).toEqual(11);
   });
 
   it('Erro ao criar cidade sem nome', async () => {

@@ -5,7 +5,7 @@ import { CidadesController, PessoasController } from './../controllers';
 const router = Router();
 
 router.get('/', (req, res) => {
-  console.log(req.body);
+  console.log(req.query);
   return res.send({ msg: 'Online' });
 });
 
