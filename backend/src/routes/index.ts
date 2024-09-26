@@ -1,19 +1,26 @@
 import { Router } from 'express';
-import { StatusCodes} from 'http-status-codes';
+import { CidadesController, PessoasController } from './../controllers';
 
 
 const router = Router();
 
 router.get('/', (req, res) => {
-  console.log(req.body);  
-  return res.send({ msg: 'Olá Mundo' });
+  console.log(req.query);
+  return res.send({ msg: 'Online' });
 });
 
-router.post('/teste', (req, res) => {
-  console.log(`QUERY: ${req.query}`);
-  console.log(`BODY: ${req.body}`);
-  return res.status(StatusCodes.CREATED).send({ query: req.query, body: req.body });
-});
+// Endpoints de Cidades
+router.get('/cidades', CidadesController.getAll);
+router.post('/cidades', CidadesController.createBodyValidator, CidadesController.create);
+router.get('/cidades/:id', CidadesController.getById);
+router.put('/cidades/:id', CidadesController.updateById);
+router.delete('/cidades/:id', CidadesController.deleteById);
 
+// Endpoints de Pessoas
+router.get('/pessoas', PessoasController.getAll);
+router.post('/pessoas', PessoasController.create);
+router.get('/pessoas/:id', PessoasController.getById);
+router.put('/pessoas/:id', PessoasController.updateById);
+router.delete('/pessoas/:id', PessoasController.deleteById);
 
 export { router };
